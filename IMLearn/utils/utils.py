@@ -1,9 +1,15 @@
 from typing import Tuple
 import numpy as np
 import pandas as pd
+from sklearn.model_selection import train_test_split
 
 
+<<<<<<< Updated upstream
 def split_train_test(X: pd.DataFrame, y: pd.Series, train_proportion: float = .75) \
+=======
+def split_train_test(X: pd.DataFrame, y: pd.Series,
+                     train_proportion: float = .25) \
+>>>>>>> Stashed changes
         -> Tuple[pd.DataFrame, pd.Series, pd.DataFrame, pd.Series]:
     """
     Randomly split given sample to a training- and testing sample
@@ -33,9 +39,16 @@ def split_train_test(X: pd.DataFrame, y: pd.Series, train_proportion: float = .7
         Responses of test samples
 
     """
-    raise NotImplementedError()
+    X['price'] = y
+    train = X.sample(frac=train_proportion)
+    test = X.drop(train.index)
+    train_y = train['price']
+    train_X = train.drop(columns="price")
+    test_y = test['price']
+    test_X = test.drop(columns="price")
 
 
+    return train_X, test_X, train_y, test_y
 def confusion_matrix(a: np.ndarray, b: np.ndarray) -> np.ndarray:
     """
     Compute a confusion matrix between two sets of integer vectors
